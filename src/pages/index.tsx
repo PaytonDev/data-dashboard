@@ -1,12 +1,9 @@
 import * as React from "react";
 import Head from "next/head";
-import { Box, IconButton } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Dashboard from "./dashboard/Dashboard";
 import { SideMenu, Header, Login } from "@/components";
 import { useSession } from "next-auth/react";
-import { useTheme } from "@mui/material/styles";
+import styles from "@/styles/global.module.css";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -19,8 +16,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Header />
+      <Header />
+      <main className={styles.main}>
         {session && (
           <>
             <SideMenu />

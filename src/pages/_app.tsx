@@ -1,12 +1,13 @@
 import * as React from "react";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { CssBaseline, PaletteMode } from "@mui/material";
+import { CssBaseline, PaletteMode, useMediaQuery } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { ColorModeProvider, useColorMode } from "@/context";
+import { ColorModeProvider } from "@/context";
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const [mode, setMode] = React.useState("light" as PaletteMode);
+  const modePreference = useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light";
+  const [mode, setMode] = React.useState(modePreference as PaletteMode);
 
   const toggleColorMode = () => {
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));

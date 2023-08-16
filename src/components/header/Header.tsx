@@ -12,18 +12,22 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useMediaQuery } from "@mui/material";
 import { StyleToggle } from "@/components";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 const pages = ["Profile", "Account", "Dashboard"];
 
 export const Header = () => {
+  const isMobile = useMediaQuery("(max-width:768px)");
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const { data: session } = useSession();
 
   const settings = [session ? "Logout" : "Login"];
+
+  const responsiveEmail = isMobile ? null : session ? `Logged in as ${session?.user?.email}` : null;
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -70,43 +74,6 @@ export const Header = () => {
           >
             Datasoft
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -138,9 +105,7 @@ export const Header = () => {
             ))}
           </Box>
           <Box sx={{ pr: 2 }}>
-            <Typography variant="body1">
-              {session ? `Logged in as ${session?.user?.email}` : null}
-            </Typography>
+            <Typography variant="body1">{responsiveEmail}</Typography>
           </Box>
           <StyleToggle />
           <Box sx={{ flexGrow: 0 }}>

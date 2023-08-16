@@ -1,0 +1,14 @@
+.top-cards-container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.data-card {
+  padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .top-cards-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
